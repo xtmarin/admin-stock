@@ -1,11 +1,17 @@
-import React from 'react'
-import { Button } from "@/components/ui"
+"use client";
 
-export default function Homepage() {
-  return (
-    <div>
-      <p>Hola sena</p>
-      <Button>Click me</Button>
-    </div>
-  )
+
+import { useUser } from "@clerk/nextjs";
+import { Loading } from "@/components/shared"
+import { Login } from "./components";
+import { HomePage } from "./(panel)/products/home";
+
+export default function AppPage() {
+  const { isLoaded, isSignedIn} = useUser();
+ 
+
+  if (!isLoaded) return <Loading full />;
+  if (!isSignedIn) return <Login />;
+
+  return <HomePage />
 }

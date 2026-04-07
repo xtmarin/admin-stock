@@ -1,9 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx,scss}",
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx,scss}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx,scss}",
+    "./src/layouts/**/*.{js,ts,jsx,tsx,mdx,scss}",
   ],
   theme: {
     extend: {
@@ -18,8 +19,16 @@ module.exports = {
 
         secondary: "hsl(var(--secondary))",
         "secondary-foreground": "hsl(var(--secondary-foreground))",
+
+        muted: "hsl(var(--muted))",
+        "muted-foreground": "hsl(var(--muted-foreground))",
+
+        popover: "hsl(var(--popover))",
+        "popover-foreground": "hsl(var(--popover-foreground))",
+
+        ring: "hsl(var(--ring))",
       },
     },
   },
   plugins: [],
-}
+};
