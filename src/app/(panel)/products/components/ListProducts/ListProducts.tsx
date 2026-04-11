@@ -2,13 +2,32 @@ import { map } from "lodash";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui";
 import { ListProductsProps } from "./ListProducts.type";
 import { Product } from "./Product";
+import { Modal } from "@/components/shared";
+import { ProductModel } from "@/models";
+import { useState } from "react";
+import { toast } from "sonner";
+import { productCtrl } from "@/api";
 
 export default function ListProducts(props: ListProductsProps) {
-  const { products, setEditProducts, onReload } = props;
+  const { products, setEditProduct, onReload } = props;
+  const [deleteProduct, setDeleteProduct] = useState<ProductModel>();
+ 
+  const onDeleteProduct = async () => {
+    if (!deleteProduct) return;
 
-  console.log(products);
+    try{
+      await productCtrl.remove(deleteProduct.id);
+      setDeleteProduct(undefined);
+      onReload();
+    } catch (error) {
+      console.error (error);
+      toast.error("Error al eliminar el producto");
+    }
+  };
+  
 
   return (
+    <>
     <Table>
       <TableHeader>
         <TableRow>
@@ -19,11 +38,13 @@ export default function ListProducts(props: ListProductsProps) {
       </TableHeader>
 
       <TableBody>
-        {map(products, (product)=>(
+        {map(products, (product) => (
           <Product
             key={product.id}
             product={product}
-
+            setEditProduct={setEditProduct}
+            setDeleteProduct={setDeleteProduct}
+            
           />
         ))}
       </TableBody>
@@ -31,6 +52,16 @@ export default function ListProducts(props: ListProductsProps) {
 
     </Table>
 
-      
+    <Modal.Confirm
+    title="¿Eliminar producto"
+    description={`¿Estás seguro de eliminar este producto ${deleteProduct?.name} ?`}
+    onCancel={() => setDeleteProduct(undefined)}
+    onConfirm={onDeleteProduct}
+    open={!!deleteProduct}
+    danger
+    />
+
+
+    </>
   );
 }

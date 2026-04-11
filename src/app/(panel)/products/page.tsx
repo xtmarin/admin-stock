@@ -4,11 +4,17 @@ import { useEffect, useState } from "react";
 import { productCtrl } from "@/api";
 import { ProductModel } from "@/models";
 import { Skeleton } from "@/components/shared";
-import { ListProducts } from "./components";
+import { ListProducts, ButtonAddProduct } from "./components";
 
 export default function ProductPage() {
-    const [products, setProducts] = useState<ProductModel[] | undefined>(undefined);
-    console.log(products);
+    const [products, setProducts] = useState<ProductModel[] | undefined>();
+
+    const [editProduct, setEditProduct] = useState<ProductModel>();
+    
+
+    
+
+    
     useEffect(() => {
       getProducts();
     }, []);
@@ -28,11 +34,23 @@ export default function ProductPage() {
 
     return (
       <div>
-          <ListProducts
-           
-            products={products}
+
+          <ButtonAddProduct
+            onReload={getProducts}
+            editProduct={editProduct}
+            setEditProduct={setEditProduct}
+            
+           />
           
+          <ListProducts
+            products={products}
+            onReload={getProducts}
+            setEditProduct={setEditProduct}
+             
+            
           />
+
+         
       </div>
     );
 }

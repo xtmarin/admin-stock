@@ -1,8 +1,8 @@
 import { ProductModel } from "@/models";
 import { Dispatch, SetStateAction } from "react";
 
-export type ProductProps = {
-    product: ProductModel;
+export type ButtonAddProductProps = {
+    editProduct?: ProductModel;
     setEditProduct: Dispatch<SetStateAction<ProductModel | undefined>>;
-    setDeleteProduct: Dispatch<SetStateAction<ProductModel | undefined>>;
+    onReload: () => Promise<void>;
 };
